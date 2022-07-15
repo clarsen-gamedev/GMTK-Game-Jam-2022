@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveSpeed = 1f;              // How fast the player moved
     [SerializeField] float jumpForce = 1f;              // How high the player jumps
     [SerializeField] float floatForce = 1f;             // How much force is applied with the flap action
-    [SerializeField] float groundCheckRadius = 0.5f;    //
+    [SerializeField] float groundCheckRadius = 0.5f;    // 
     [SerializeField] float slopeCheckDistance = 0.5f;   // 
 
     [Header("Physics Materials")]
@@ -25,8 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform groundCheck; //
     [SerializeField] LayerMask groundLayer; // 
 
-    public enum ControlScheme {BASIC, FLAP, GRAVITY, NONE}; // Enum types for all possible control schemes the player has
-    public ControlScheme controlScheme;                     // Reference to the currently used control scheme
+    public enum ControlScheme {BASIC, FLAP, GRAVITY, DASH, NONE};   // Enum types for all possible control schemes the player has
+    public ControlScheme controlScheme;                             // Reference to the currently used control scheme
     #endregion
 
     #region Private Variables
@@ -115,6 +115,8 @@ public class PlayerController : MonoBehaviour
                 newVelocity.Set(0.0f, 0.0f);
                 rb.velocity = newVelocity;
 
+                rb.AddForce(new Vector2(0.0f, jumpForce), ForceMode2D.Impulse);
+
                 if (rb.gravityScale == 1)
                 {
                     rb.gravityScale = -1;
@@ -125,6 +127,12 @@ public class PlayerController : MonoBehaviour
                     rb.gravityScale = 1;
                     rb.AddForce(new Vector2(0, 1), ForceMode2D.Impulse);
                 }
+            }
+            
+            else if (controlScheme == ControlScheme.DASH)   // If the control scheme is set to DASH...
+            {
+                newVelocity.Set(100 * moveX, 0.0f);
+                rb.velocity = newVelocity;
             }
         }
 
@@ -144,6 +152,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha3))   // Switch to GRAVITY
         {
             controlScheme = ControlScheme.GRAVITY;
+            Debug.Log("Set control scheme to " + controlScheme);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))   // Switch to DASH
+        {
+            controlScheme = ControlScheme.DASH;
             Debug.Log("Set control scheme to " + controlScheme);
         }
     }
