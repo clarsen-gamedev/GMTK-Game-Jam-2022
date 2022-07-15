@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         transform.position += movement;                                             // Move the player
 
         // Action
-        if (Input.GetKeyDown(KeyCode.Space))    // When the ACTION key is pressed...
+        if (Input.GetKey(KeyCode.Space))    // When the ACTION key is pressed...
         {
             if (controlScheme == ControlScheme.BASIC)   // If the control scheme is set to BASIC...
             {
@@ -69,19 +69,19 @@ public class PlayerController : MonoBehaviour
         }
 
         // DEBUG Switch State
-        if (Input.GetKeyDown(KeyCode.Alpha1))   // Switch to BASIC
+        if (Input.GetKey(KeyCode.Alpha1))   // Switch to BASIC
         {
             controlScheme = ControlScheme.BASIC;
             Debug.Log("Set control scheme to " + controlScheme);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))   // Switch to FLAP
+        if (Input.GetKey(KeyCode.Alpha2))   // Switch to FLAP
         {
             controlScheme = ControlScheme.FLAP;
             Debug.Log("Set control scheme to " + controlScheme);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))   // Switch to GRAVITY
+        if (Input.GetKey(KeyCode.Alpha3))   // Switch to GRAVITY
         {
             controlScheme = ControlScheme.GRAVITY;
             Debug.Log("Set control scheme to " + controlScheme);
