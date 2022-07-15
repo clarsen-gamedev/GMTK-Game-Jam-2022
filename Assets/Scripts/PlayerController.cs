@@ -10,12 +10,18 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     #region Public & Serialized Variables
+    [Header("Movement")]
     [SerializeField] float moveSpeed = 1f;              // How fast the player moved
     [SerializeField] float jumpForce = 1f;              // How high the player jumps
     [SerializeField] float floatForce = 1f;             // How much force is applied with the flap action
     [SerializeField] float groundCheckRadius = 0.5f;    //
     [SerializeField] float slopeCheckDistance = 0.5f;   // 
 
+    [Header("Physics Materials")]
+    [SerializeField] PhysicsMaterial2D noFriction;      // Physics material for platforms with no friction
+    [SerializeField] PhysicsMaterial2D fullFriction;    // Physics material for platforms with full friction
+
+    [Header("Ground Checks")]
     [SerializeField] Transform groundCheck; //
     [SerializeField] LayerMask groundLayer; // 
 
@@ -37,10 +43,11 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;        // If the player is grounded or not
     private bool canWalkOnSlope;    // If the player can walk on a slope or not
 
-    private float xInput;               // Stores the horizontal input of the player
+    private float moveX;                // Stores the horizontal input of the player
     private float maxSlopeAngle;        // Maximum angle the player can jump from
     private float slopeDownAngle;       // 
     private float slopeDownAngleOld;    // 
+    private float slopeSideAngle;       // 
     #endregion
 
     #region Functions
@@ -71,47 +78,52 @@ public class PlayerController : MonoBehaviour
     // Check the input of the player
     private void CheckInput()
     {
+        // Movement
+        moveX = Input.GetAxis("Horizontal");
+
         // Action
-        if (Input.GetKey(KeyCode.Space))    // When the ACTION key is pressed...
+        if (Input.GetKeyDown(KeyCode.Space))    // When the ACTION key is pressed...
         {
             if (controlScheme == ControlScheme.BASIC)   // If the control scheme is set to BASIC...
             {
-                if (isGrounded && !isOnSlope)   // Flat jump
+                if (canJump)    // If the player can currently jump...
                 {
-                    
-                }
+                    canJump = false;
+                    isJumping = true;
 
-                else if (isGrounded && isOnSlope)   // Slope jump
-                {
+                    newVelocity.Set(0.0f, 0.0f);
+                    rb.velocity = newVelocity;
 
-                }
-
-                else if (!isGrounded)   // In air
-                {
-
-                }
-
-                if (Mathf.Abs(rb.velocity.y) < 0.001f)   // Check to see if the player is on solid ground
-                {
-                    rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse); // Add an upwards force to the player's Rigidbody
+                    rb.AddForce(new Vector2(0.0f, jumpForce), ForceMode2D.Impulse);
                 }
             }
 
             else if (controlScheme == ControlScheme.FLAP)   // If the control scheme is set to FLAP...
             {
-                rb.velocity = new Vector2(0f, 0f);                               // Reset velocity
+                isJumping = true;
+
+                newVelocity.Set(0.0f, 0.0f);
+                rb.velocity = newVelocity;
+
                 rb.AddForce(new Vector2(0, floatForce), ForceMode2D.Impulse);    // Add an upwards force to the player's Rigidbody
             }
 
             else if (controlScheme == ControlScheme.GRAVITY)    // If the control scheme is set to GRAVITY...
             {
+                isJumping = true;
+
+                newVelocity.Set(0.0f, 0.0f);
+                rb.velocity = newVelocity;
+
                 if (rb.gravityScale == 1)
                 {
                     rb.gravityScale = -1;
+                    rb.AddForce(new Vector2(0, -1), ForceMode2D.Impulse);
                 }
                 else
                 {
                     rb.gravityScale = 1;
+                    rb.AddForce(new Vector2(0, 1), ForceMode2D.Impulse);
                 }
             }
         }
@@ -146,7 +158,7 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
         }
 
-        if (isGrounded && !isJumping && slopeDownAngle <= maxSlopeAngle)
+        if (isGrounded && !isJumping)
         {
             canJump = true;
         }
@@ -163,7 +175,26 @@ public class PlayerController : MonoBehaviour
 
     private void SlopeCheckX(Vector2 checkPos)
     {
+        RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, groundLayer);
+        RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, groundLayer);
 
+        if (slopeHitFront)
+        {
+            isOnSlope = true;
+            slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+        }
+
+        else if (slopeHitBack)
+        {
+            isOnSlope = true;
+            slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+        }
+
+        else
+        {
+            slopeSideAngle = 0.0f;
+            isOnSlope = false;
+        }
     }
 
     private void SlopeCheckY(Vector2 checkPos)
@@ -186,22 +217,30 @@ public class PlayerController : MonoBehaviour
             Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
             Debug.DrawRay(hit.point, hit.normal, Color.green);
         }
+
+        if (isOnSlope && moveX == 0.0f)
+        {
+            rb.sharedMaterial = fullFriction;
+        }
+
+        else
+        {
+            rb.sharedMaterial = noFriction;
+        }
     }
 
     // Apply Movement
     private void ApplyMovement()
     {
-        float moveX = Input.GetAxis("Horizontal");  // Stores the direction when the left or right input is pressed
-
         // If not on a slope...
-        if (isGrounded && !isOnSlope)
+        if (isGrounded && !isOnSlope && !isJumping)
         {
             newVelocity.Set(moveSpeed * moveX, 0.0f);
             rb.velocity = newVelocity;
         }
 
         // If on a slope...
-        else if (isGrounded && isOnSlope)
+        else if (isGrounded && isOnSlope && !isJumping)
         {
             newVelocity.Set(moveSpeed * slopeNormalPerp.x * -moveX, moveSpeed * slopeNormalPerp.y * -moveX);
             rb.velocity = newVelocity;

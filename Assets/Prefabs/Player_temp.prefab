@@ -103,8 +103,10 @@ MonoBehaviour:
   moveSpeed: 10
   jumpForce: 10
   floatForce: 5
-  groundCheckRadius: 0.5
+  groundCheckRadius: 0.2
   slopeCheckDistance: 0.5
+  noFriction: {fileID: 6200000, guid: 65c1df37cdcc77343b808fd8af0eef61, type: 2}
+  fullFriction: {fileID: 6200000, guid: 9d487e92c75db3e45936c7d39eee627e, type: 2}
   groundCheck: {fileID: 6178267679238174533}
   groundLayer:
     serializedVersion: 2
