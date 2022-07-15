@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform groundCheck; //
     [SerializeField] LayerMask groundLayer; // 
 
-    public enum ControlScheme {BASIC, FLAP, GRAVITY, DASH, NONE};   // Enum types for all possible control schemes the player has
+    public enum ControlScheme {JUMP, FLAP, GRAVITY, DASH, NONE};   // Enum types for all possible control schemes the player has
     public ControlScheme controlScheme;                             // Reference to the currently used control scheme
     #endregion
 
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         cc = GetComponent<CapsuleCollider2D>(); // Grab the CapsuleCollider2D attached to the player
         colliderSize = cc.size;                 // Grab the size of the CapsuleCollider2D
 
-        controlScheme = ControlScheme.BASIC;    // Default control scheme to BASIC
+        controlScheme = ControlScheme.JUMP;    // Default control scheme to BASIC
     }
 
     // Update is called once per frame
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
         // Action
         if (Input.GetKeyDown(KeyCode.Space))    // When the ACTION key is pressed...
         {
-            if (controlScheme == ControlScheme.BASIC)   // If the control scheme is set to BASIC...
+            if (controlScheme == ControlScheme.JUMP)   // If the control scheme is set to BASIC...
             {
                 if (canJump)    // If the player can currently jump...
                 {
@@ -131,15 +131,17 @@ public class PlayerController : MonoBehaviour
             
             else if (controlScheme == ControlScheme.DASH)   // If the control scheme is set to DASH...
             {
-                newVelocity.Set(100 * moveX, 0.0f);
+                newVelocity.Set(0.0f, 0.0f);
                 rb.velocity = newVelocity;
+
+                rb.AddForce(new Vector2(100000, floatForce), ForceMode2D.Impulse);
             }
         }
 
         // DEBUG Switch State
         if (Input.GetKey(KeyCode.Alpha1))   // Switch to BASIC
         {
-            controlScheme = ControlScheme.BASIC;
+            controlScheme = ControlScheme.JUMP;
             Debug.Log("Set control scheme to " + controlScheme);
         }
 
