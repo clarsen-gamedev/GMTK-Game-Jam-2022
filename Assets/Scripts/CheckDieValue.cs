@@ -1,3 +1,8 @@
+// Name: CheckDieValue.cs
+// Author: Connor Larsen
+// Date: 07/15/2022
+// Description: Check which side of the die is facing up and store the value
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
