@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] GameObject gameplayUI; // UI screen for gameplay
     [SerializeField] GameObject pauseUI;    // UI screen for pause screen
+    [SerializeField] GameObject gameOverUI; // UI screen for game over screen
 
     [Header("Controls")]
     [SerializeField] KeyCode pauseButton = KeyCode.Escape;  // Reference to the key responsible for pausing the game
@@ -122,18 +123,21 @@ public class GameManager : MonoBehaviour
         {
             gameplayUI.SetActive(true);
             pauseUI.SetActive(false);
+            gameOverUI.SetActive(false);
         }
 
         else if (screen == UIScreens.PAUSE)
         {
             gameplayUI.SetActive(false);
             pauseUI.SetActive(true);
+            gameOverUI.SetActive(false);
         }
 
         else if (screen == UIScreens.GAMEOVER)
         {
             gameplayUI.SetActive(false);
             pauseUI.SetActive(false);
+            gameOverUI.SetActive(true);
         }
     }
     #endregion
