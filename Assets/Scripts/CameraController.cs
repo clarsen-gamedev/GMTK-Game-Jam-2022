@@ -1,3 +1,8 @@
+// Name: CameraController.cs
+// Author: Connor Larsen
+// Date: 07/15/2022
+// Description: Have the attached camera follow a declared target
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
