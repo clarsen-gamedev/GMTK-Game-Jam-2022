@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     #region Private Variables
     private Rigidbody2D rb;         // Reference to the player's Rigidbody2D
-    private CapsuleCollider2D cc;   // Reference to the player's CapsuleCollider2D
+    private BoxCollider2D bc;       // Reference to the player's BoxCollider2D
 
     private Vector2 colliderSize;       // Reference to the size of the player's CapsuleCollider2D
     private Vector2 slopeNormalPerp;    // 
@@ -55,8 +55,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();       // Grab the Rigidbody2D attached to the player
-        cc = GetComponent<CapsuleCollider2D>(); // Grab the CapsuleCollider2D attached to the player
-        colliderSize = cc.size;                 // Grab the size of the CapsuleCollider2D
+        bc = GetComponent<BoxCollider2D>();     // Grab the CapsuleCollider2D attached to the player
+        colliderSize = bc.size;                 // Grab the size of the CapsuleCollider2D
 
         controlScheme = ControlScheme.JUMP;    // Default control scheme to BASIC
     }
