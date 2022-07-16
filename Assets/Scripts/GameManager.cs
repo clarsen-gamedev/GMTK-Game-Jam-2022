@@ -12,23 +12,29 @@ public class GameManager : MonoBehaviour
 {
     #region Public and Serialized Variables
     [Header("Gameplay Objects")]
-    public GameObject player;     // Reference to the player object in the scene
-    public Vector3 startPosition; // Starting position for the player on game start
+    public GameObject player;                   // Reference to the player object in the scene
+    public Vector3 startPosition;               // Starting position for the player on game start
+    [HideInInspector] public int playerScore;   // The player's score
 
     [Header("Roulette Colliders")]
     public GameObject[] outerRingColliders;
     public GameObject[] middleRingColliders;
-    //public GameObject[] innerRingColliders;
+    public GameObject[] innerRingColliders;
 
     [Header("Animations")]
     public Animator gateAnimatorOuter;
     public Animator gateAnimatorInner;
+
+    [Header("Materials")]
+    public Material goal;
+    public Material hazard;
 
     [Header("UI Elements")]
     [SerializeField] GameObject gameplayUI; // UI screen for gameplay
     [SerializeField] GameObject pauseUI;    // UI screen for pause screen
     [SerializeField] GameObject gameOverUI; // UI screen for game over screen
     [SerializeField] Text gameOverText;     // Text for the game over screen
+    [SerializeField] Text scoreText;        // Text for the player score
 
     [Header("Controls")]
     [SerializeField] KeyCode pauseButton = KeyCode.Escape;  // Reference to the key responsible for pausing the game
@@ -52,6 +58,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        // Display the score
+        scoreText.text = "Score: " + playerScore;
+
         // Pause the game
         if (Input.GetKeyDown(pauseButton))
         {
@@ -104,24 +113,55 @@ public class GameManager : MonoBehaviour
         if (cycleCount == 0)    // If 1st turn, spawn in outer ring
         {
             outerRingColliders[Random.Range(0, outerRingColliders.Length)].gameObject.SetActive(true);  // Activate a random collider in the outer ring
+            cycleCount++;   // Increase the cycle count by 1
         }
 
         else if (cycleCount == 1)   // If 2nd turn, spawn in middle ring
         {
             middleRingColliders[Random.Range(0, middleRingColliders.Length)].gameObject.SetActive(true);    // Activate a random collider in the middle ring
+            cycleCount++;   // Increase the cycle count by 1
         }
         
         else if (cycleCount == 2)   // If 3rd turn, spawn in inner ring
         {
-            //innerRingColliders[Random.Range(0, innerRingColliders.Length)].gameObject.SetActive(true);  // Activate a random collider in the outer ring
+            innerRingColliders[Random.Range(0, innerRingColliders.Length)].gameObject.SetActive(true);  // Activate a random collider in the outer ring
+            cycleCount++;   // Increase the cycle count by 1
         }
 
-        else    // If 4th or higher, randomly select anywhere on the wheel and start activating a random number of hazard squares
+        else    // Soft reset the game
         {
+            // Reset the player
+            player.transform.position = startPosition;                  // Reset player position
+            player.transform.rotation = Quaternion.identity;            // Reset player rotation
+            player.GetComponent<Rigidbody>().velocity = Vector3.zero;   // Reset player movement
+            player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
+            // Reset Roulette Colliders
+            foreach (GameObject collider in outerRingColliders) // Outer Ring
+            {
+                collider.gameObject.SetActive(false);
+            }
+            foreach (GameObject collider in middleRingColliders)    // Middle Ring
+            {
+                collider.gameObject.SetActive(false);
+            }
+            foreach (GameObject collider in innerRingColliders) // Inner Ring
+            {
+                collider.gameObject.SetActive(false);
+            }
+
+            // Reset Animations
+            gateAnimatorOuter.Play("GateClosed");
+            gateAnimatorOuter.SetBool("GateOpen", false);
+
+            gateAnimatorInner.Play("GateClosed");
+            gateAnimatorInner.SetBool("GateOpen", false);
+
+            // Reset cycle
+            cycleCount = 0;
+
+            NextGoal();
         }
-
-        cycleCount++;   // Increase the cycle count by 1
     }
 
     // Call this function to unpause the game
@@ -151,7 +191,8 @@ public class GameManager : MonoBehaviour
         isPaused = false;           // Resume game
 
         // Reset Variables
-        cycleCount = 0; // Reset the cycle counter
+        cycleCount = 0;     // Reset the cycle counter
+        playerScore = 0;    // Reset player score
 
         // Reset the player
         player.transform.position = startPosition;                  // Reset player position
@@ -168,17 +209,19 @@ public class GameManager : MonoBehaviour
         {
             collider.gameObject.SetActive(false);
         }
-        //foreach (GameObject collider in innerRingColliders) // Inner Ring
-        //{
-        //    collider.gameObject.SetActive(false);
-        //}
+        foreach (GameObject collider in innerRingColliders) // Inner Ring
+        {
+            collider.gameObject.SetActive(false);
+        }
+
         NextGoal(); // Set the next goal
 
         // Reset Animations
         gateAnimatorOuter.Play("GateClosed");
         gateAnimatorOuter.SetBool("GateOpen", false);
 
-        //gateAnimatorInner.Play("GateClosed");
+        gateAnimatorInner.Play("GateClosed");
+        gateAnimatorInner.SetBool("GateOpen", false);
     }
 
     // Call this function when the player dies

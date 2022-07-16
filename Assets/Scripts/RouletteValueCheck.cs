@@ -30,13 +30,15 @@ public class RouletteValueCheck : MonoBehaviour
         if (collider.tag == "Player")   // If the player enters the hitbox of an active collider...
         {
             // If the face matches the required value...
-            if (collider.gameObject.GetComponent<CheckDieValue>().currentSide == requiredFace)
+            if (collider.gameObject.GetComponent<CheckDieValue>().currentSide == requiredFace || requiredFace == 0)
             {
                 if (!gateAnimator.GetBool("GateOpen"))    // If the gate is still closed...
                 {
                     gateAnimator.SetBool("GateOpen", true);    // Open the gate
                 }
                 gameObject.SetActive(false);    // Disable the current collider
+
+                gameManager.playerScore += requiredFace;
 
                 gameManager.NextGoal(); // Select the next collider to activate
             }

@@ -65,31 +65,37 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            rb.angularVelocity = Vector3.zero;
             transform.rotation = Quaternion.Euler(0, 0, 90);
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            rb.angularVelocity = Vector3.zero;
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
+            rb.angularVelocity = Vector3.zero;
             transform.rotation = Quaternion.Euler(-90, 0, 0);
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
+            rb.angularVelocity = Vector3.zero;
             transform.rotation = Quaternion.Euler(90, 0, 0);
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
+            rb.angularVelocity = Vector3.zero;
             transform.rotation = Quaternion.Euler(0, 0, 180);
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
+            rb.angularVelocity = Vector3.zero;
             transform.rotation = Quaternion.Euler(0, -90, -90);
         }
     }
