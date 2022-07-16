@@ -7,6 +7,7 @@ TagManager:
   - Hazard
   - Manager
   - Roulette
+  - Gate
   layers:
   - Default
   - TransparentFX
