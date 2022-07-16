@@ -16,10 +16,13 @@ public class GameManager : MonoBehaviour
     public Vector3 startPosition; // Starting position for the player on game start
 
     [Header("Roulette Colliders")]
-    public GameObject[] ring1Colliders;
+    public GameObject[] outerRingColliders;
+    public GameObject[] middleRingColliders;
+    //public GameObject[] innerRingColliders;
 
     [Header("Animations")]
-    //public Animator gateAnimator;
+    public Animator gateAnimatorOuter;
+    public Animator gateAnimatorInner;
 
     [Header("UI Elements")]
     [SerializeField] GameObject gameplayUI; // UI screen for gameplay
@@ -98,10 +101,25 @@ public class GameManager : MonoBehaviour
     public void NextGoal()
     {
         // Check which turn it is in the current game
-            // If 1st turn, spawn in outer ring
-            // If 2nd turn, spawn in middle ring
-            // If 3rd turn, spawn in inner ring
-            // If 4th or higher, randomly select anywhere on the wheel and start activating a random number of hazard squares
+        if (cycleCount == 0)    // If 1st turn, spawn in outer ring
+        {
+            outerRingColliders[Random.Range(0, outerRingColliders.Length)].gameObject.SetActive(true);  // Activate a random collider in the outer ring
+        }
+
+        else if (cycleCount == 1)   // If 2nd turn, spawn in middle ring
+        {
+            middleRingColliders[Random.Range(0, middleRingColliders.Length)].gameObject.SetActive(true);    // Activate a random collider in the middle ring
+        }
+        
+        else if (cycleCount == 2)   // If 3rd turn, spawn in inner ring
+        {
+            //innerRingColliders[Random.Range(0, innerRingColliders.Length)].gameObject.SetActive(true);  // Activate a random collider in the outer ring
+        }
+
+        else    // If 4th or higher, randomly select anywhere on the wheel and start activating a random number of hazard squares
+        {
+
+        }
 
         cycleCount++;   // Increase the cycle count by 1
     }
@@ -141,15 +159,25 @@ public class GameManager : MonoBehaviour
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;   // Reset player movement
 
         // Reset Roulette Colliders
-        foreach (GameObject collider in ring1Colliders)
+        foreach (GameObject collider in outerRingColliders) // Outer Ring
         {
-            collider.GetComponent<RouletteValueCheck>().isActive = false;   // Set all colliders to inactive
-            collider.SetActive(true);
+            collider.gameObject.SetActive(false);
         }
-        ring1Colliders[Random.Range(0, ring1Colliders.Length)].GetComponent<RouletteValueCheck>().isActive = true;  // Activate a random collider
+        foreach (GameObject collider in middleRingColliders)    // Middle Ring
+        {
+            collider.gameObject.SetActive(false);
+        }
+        //foreach (GameObject collider in innerRingColliders) // Inner Ring
+        //{
+        //    collider.gameObject.SetActive(false);
+        //}
+        NextGoal(); // Set the next goal
 
         // Reset Animations
-        //gateAnimator.Play("GateClose");
+        gateAnimatorOuter.Play("GateClosed");
+        gateAnimatorOuter.SetBool("GateOpen", false);
+
+        //gateAnimatorInner.Play("GateClosed");
     }
 
     // Call this function when the player dies
