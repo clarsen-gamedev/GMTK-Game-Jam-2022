@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
         player.transform.position = startPosition;                  // Reset player position
         player.transform.rotation = Quaternion.identity;            // Reset player rotation
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;   // Reset player movement
+        player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
         // Reset Roulette Colliders
         foreach (GameObject collider in outerRingColliders) // Outer Ring

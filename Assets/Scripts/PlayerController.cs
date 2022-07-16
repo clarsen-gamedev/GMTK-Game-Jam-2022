@@ -43,6 +43,36 @@ public class PlayerController : MonoBehaviour
     {
         xInput = Input.GetAxis("Horizontal");   // Grab the input on the x-axis
         yInput = Input.GetAxis("Vertical");     // Grab the input on the y-axis
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            transform.rotation = Quaternion.Euler(-90, 0, 0);
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            transform.rotation = Quaternion.Euler(90, 0, 0);
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 180);
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            transform.rotation = Quaternion.Euler(0, -90, -90);
+        }
     }
 
     // Move the player
