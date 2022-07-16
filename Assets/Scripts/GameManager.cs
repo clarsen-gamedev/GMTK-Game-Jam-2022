@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] ring1Colliders;
 
     [Header("Animations")]
-    public Animator gateAnimator;
+    //public Animator gateAnimator;
 
     [Header("UI Elements")]
     [SerializeField] GameObject gameplayUI; // UI screen for gameplay
@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
         ring1Colliders[Random.Range(0, ring1Colliders.Length)].GetComponent<RouletteValueCheck>().isActive = true;  // Activate a random collider
 
         // Reset Animations
-        gateAnimator.Play("GateClose");
+        //gateAnimator.Play("GateClose");
     }
 
     // Call this function when the player dies

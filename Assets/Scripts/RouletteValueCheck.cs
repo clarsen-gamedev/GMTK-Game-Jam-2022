@@ -13,7 +13,7 @@ public class RouletteValueCheck : MonoBehaviour
     [Header("Variables")]
     public int requiredFace;        // Which face of the die is needed to pass the check
     public bool isActive;           // If the collider is active or not
-    public Animator gateAnimator;   // Animator attached to the gate which gets lowered
+    //public Animator gateAnimator;   // Animator attached to the gate which gets lowered
 
     [Header("Materials")]
     [SerializeField] Material inactive;
@@ -50,10 +50,10 @@ public class RouletteValueCheck : MonoBehaviour
             // If the face matches the required value...
             if (collider.gameObject.GetComponent<CheckDieValue>().currentSide == requiredFace)
             {
-                if (gateAnimator.GetCurrentAnimatorStateInfo(0).IsName("GateClose"))    // If the gate is still closed...
-                {
-                    gateAnimator.SetTrigger("GateOpen");    // Open the gate
-                }
+                //if (gateAnimator.GetCurrentAnimatorStateInfo(0).IsName("GateClose"))    // If the gate is still closed...
+                //{
+                //    gateAnimator.SetTrigger("GateOpen");    // Open the gate
+                //}
                 gameObject.SetActive(false);    // Disable the current collider
 
                 //gameManager.NextGoal(); // Select the next collider to activate
