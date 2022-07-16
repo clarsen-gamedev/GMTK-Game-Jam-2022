@@ -1,3 +1,8 @@
+// Name: PlayerController.cs
+// Author: Connor Larsen
+// Date: 07/15/2022
+// Description: Script which controls the player character
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
