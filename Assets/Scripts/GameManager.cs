@@ -44,19 +44,31 @@ public class GameManager : MonoBehaviour
         {
             if (isPaused)   // If game is paused...
             {
-                UISwitch(UIScreens.GAME);   // Switch to game screen
-                Time.timeScale = 1f;        // Resume time
-                isPaused = false;           // Resume game
-                Debug.Log("GAME RESUMED");
+                ResumeGame();
             }
             else
             {
-                UISwitch(UIScreens.PAUSE);  // Switch to pause screen
-                Time.timeScale = 0f;        // Pause time
-                isPaused = true;            // Pause game
-                Debug.Log("GAME PAUSED");
+                PauseGame();
             }
         }    
+    }
+
+    // Call this function to unpause the game
+    public void ResumeGame()
+    {
+        UISwitch(UIScreens.GAME);   // Switch to game screen
+        Time.timeScale = 1f;        // Resume time
+        isPaused = false;           // Resume game
+        Debug.Log("GAME RESUMED");
+    }
+
+    // Call this function to pause the game
+    public void PauseGame()
+    {
+        UISwitch(UIScreens.PAUSE);  // Switch to pause screen
+        Time.timeScale = 0f;        // Pause time
+        isPaused = true;            // Pause game
+        Debug.Log("GAME PAUSED");
     }
 
     // Call this function to reinitialize the game
@@ -65,9 +77,12 @@ public class GameManager : MonoBehaviour
         // Reset the UI
         UISwitch(UIScreens.GAME);   // Switch screen
         Time.timeScale = 1f;        // Resume time
+        isPaused = false;           // Resume game
 
         // Reset the player
-        player.transform.position = startPosition;              // Randomly select new starting position from array (TEMP LOCATION UNTIL FIXED)
+        player.transform.position = startPosition;                  // Reset player position
+        player.transform.rotation = Quaternion.identity;            // Reset player rotation
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;   // Reset player movement
     }
 
     // Call this function when the player dies
