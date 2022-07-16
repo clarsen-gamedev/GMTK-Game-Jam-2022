@@ -1,0 +1,4 @@
+- dice move noises
+-roulette spin noise
+- sound for success
+- sound for failure
