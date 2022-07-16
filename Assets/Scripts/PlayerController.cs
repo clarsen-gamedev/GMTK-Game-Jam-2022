@@ -120,12 +120,12 @@ public class PlayerController : MonoBehaviour
                 if (rb.gravityScale == 1)
                 {
                     rb.gravityScale = -1;
-                    rb.AddForce(new Vector2(0, -1), ForceMode2D.Impulse);
+                    rb.AddForce(new Vector2(0, floatForce), ForceMode2D.Impulse);
                 }
                 else
                 {
                     rb.gravityScale = 1;
-                    rb.AddForce(new Vector2(0, 1), ForceMode2D.Impulse);
+                    rb.AddForce(new Vector2(0, -floatForce), ForceMode2D.Impulse);
                 }
             }
             
@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
                 newVelocity.Set(0.0f, 0.0f);
                 rb.velocity = newVelocity;
 
-                rb.AddForce(new Vector2(100000, floatForce), ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(floatForce, 0), ForceMode2D.Force);
             }
         }
 
