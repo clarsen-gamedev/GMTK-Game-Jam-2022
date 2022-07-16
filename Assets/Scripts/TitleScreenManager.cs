@@ -29,6 +29,12 @@ public class TitleScreenManager : MonoBehaviour
         UISwitch(UIScreens.INSTRUCTIONS);   // Switch to the instructions screen
     }
 
+    // Begin Game Button
+    public void BeginGame()
+    {
+        SceneManager.LoadScene("Connor Scene");
+    }
+
     // Credits Button
     public void Credits()
     {
