@@ -13,6 +13,9 @@ public class RouletteValueCheck : MonoBehaviour
     [Header("Variables")]
     public int requiredFace;        // Which face of the die is needed to pass the check
     public Animator gateAnimator;   // Animator attached to the gate which gets lowered
+
+
+
     #endregion
 
     #region Private Variables
@@ -32,6 +35,33 @@ public class RouletteValueCheck : MonoBehaviour
             // If the face matches the required value...
             if (collider.gameObject.GetComponent<CheckDieValue>().currentSide == requiredFace || requiredFace == 0)
             {
+                if (requiredFace == 1)
+                {
+                    collider.gameObject.GetComponent<AudioSource>().clip = collider.gameObject.GetComponent<PlayerController>().point1;
+                }
+                else if(requiredFace == 2)
+                {
+                    collider.gameObject.GetComponent<AudioSource>().clip = collider.gameObject.GetComponent<PlayerController>().point2;
+                }
+                else if (requiredFace == 3)
+                {
+                    collider.gameObject.GetComponent<AudioSource>().clip = collider.gameObject.GetComponent<PlayerController>().point3;
+                }
+                else if (requiredFace == 4)
+                {
+                    collider.gameObject.GetComponent<AudioSource>().clip = collider.gameObject.GetComponent<PlayerController>().point4;
+                }
+                else if (requiredFace == 5)
+                {
+                    collider.gameObject.GetComponent<AudioSource>().clip = collider.gameObject.GetComponent<PlayerController>().point5;
+                }
+                else if (requiredFace == 6)
+                {
+                    collider.gameObject.GetComponent<AudioSource>().clip = collider.gameObject.GetComponent<PlayerController>().point6;
+                }
+
+                collider.gameObject.GetComponent<AudioSource>().Play();
+
                 if (!gateAnimator.GetBool("GateOpen"))    // If the gate is still closed...
                 {
                     gateAnimator.SetBool("GateOpen", true);    // Open the gate

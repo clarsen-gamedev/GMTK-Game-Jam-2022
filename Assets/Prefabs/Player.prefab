@@ -95,6 +95,12 @@ MonoBehaviour:
   dice012: {fileID: 8300000, guid: f07caf7a76e6de94494515bf094357e7, type: 3}
   dice013: {fileID: 8300000, guid: 1ae8b2788497573419ec417a30c76e54, type: 3}
   dice014: {fileID: 8300000, guid: e7878789a579fe9449a8cd30a86c1151, type: 3}
+  point1: {fileID: 8300000, guid: ab60ceb890cd1134da829d19d04acc8a, type: 3}
+  point2: {fileID: 8300000, guid: 3f4c972bf5b92ad49b2ea2a8604d0109, type: 3}
+  point3: {fileID: 8300000, guid: db97078b8cf19c84ba46bf0cb995e73a, type: 3}
+  point4: {fileID: 8300000, guid: 63f799b268287d847b588e564cc91851, type: 3}
+  point5: {fileID: 8300000, guid: cd5b1d3bd27ffe744828a84a5306047c, type: 3}
+  point6: {fileID: 8300000, guid: 3fcfd491d670f5742b445e7a7676277e, type: 3}
 --- !u!114 &4040369191725744730
 MonoBehaviour:
   m_ObjectHideFlags: 0

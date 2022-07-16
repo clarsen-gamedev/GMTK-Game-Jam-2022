@@ -28,7 +28,14 @@ public class PlayerController : MonoBehaviour
     public AudioClip dice012;
     public AudioClip dice013;
     public AudioClip dice014;
-    
+
+    public AudioClip point1;
+    public AudioClip point2;
+    public AudioClip point3;
+    public AudioClip point4;
+    public AudioClip point5;
+    public AudioClip point6;
+
 
     #endregion
 
