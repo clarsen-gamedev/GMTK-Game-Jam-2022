@@ -21,13 +21,13 @@ public class Hazard : MonoBehaviour
     }
 
     // Check to see if the player has entered the hazard hitbox
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         // If the player has collided with the hazard
         if (collision.tag == "Player")
         {
-            collision.GetComponent<PlayerController>().enabled = false; // Disable player controls
-            gameManager.GameOver();                                     // End the current run
+            Time.timeScale = 0f;    // Pause time
+            gameManager.GameOver(); // End the current run
         }
     }
     #endregion
