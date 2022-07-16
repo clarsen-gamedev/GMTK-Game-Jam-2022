@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     #region Private Variables
     private bool isPaused = false;
+    private int cycleCount = 0;
     #endregion
 
     #region Functions
@@ -93,6 +94,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Once a value check has been acomplished, randomly choose a new spot, and also add hazards if far enough in the game
+    public void NextGoal()
+    {
+        // Check which turn it is in the current game
+            // If 1st turn, spawn in outer ring
+            // If 2nd turn, spawn in middle ring
+            // If 3rd turn, spawn in inner ring
+            // If 4th or higher, randomly select anywhere on the wheel and start activating a random number of hazard squares
+
+        cycleCount++;   // Increase the cycle count by 1
+    }
+
     // Call this function to unpause the game
     public void ResumeGame()
     {
@@ -118,6 +131,9 @@ public class GameManager : MonoBehaviour
         UISwitch(UIScreens.GAME);   // Switch screen
         Time.timeScale = 1f;        // Resume time
         isPaused = false;           // Resume game
+
+        // Reset Variables
+        cycleCount = 0; // Reset the cycle counter
 
         // Reset the player
         player.transform.position = startPosition;                  // Reset player position
