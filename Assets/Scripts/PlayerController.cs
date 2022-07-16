@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip dice012;
     public AudioClip dice013;
     public AudioClip dice014;
+    
 
     #endregion
 
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
     }
 
     // Update is called once per frame
@@ -97,5 +99,69 @@ public class PlayerController : MonoBehaviour
     {
         rb.AddForce(new Vector3(xInput, 0f, yInput) * moveSpeed);
     }
+
+    private void OnCollisionEnter()
+    {
+        int num = Random.Range(1, 15);
+        if (num == 1)
+        {
+            GetComponent<AudioSource>().clip = dice001;
+        }
+        else if (num == 2)
+        {
+            GetComponent<AudioSource>().clip = dice002;
+        }
+        else if (num == 3)
+        {
+            GetComponent<AudioSource>().clip = dice003;
+        }
+        else if (num == 4)
+        {
+            GetComponent<AudioSource>().clip = dice004;
+        }
+        else if (num == 5)
+        {
+            GetComponent<AudioSource>().clip = dice005;
+        }
+        else if (num == 6)
+        {
+            GetComponent<AudioSource>().clip = dice006;
+        }
+        else if (num == 7)
+        {
+            GetComponent<AudioSource>().clip = dice007;
+        }
+        else if (num == 8)
+        {
+            GetComponent<AudioSource>().clip = dice008;
+        }
+        else if (num == 9)
+        {
+            GetComponent<AudioSource>().clip = dice009;
+        }
+        else if (num == 10)
+        {
+            GetComponent<AudioSource>().clip = dice010;
+        }
+        else if (num == 11)
+        {
+            GetComponent<AudioSource>().clip = dice011;
+        }
+        else if (num == 12)
+        {
+            GetComponent<AudioSource>().clip = dice012;
+        }
+        else if (num == 13)
+        {
+            GetComponent<AudioSource>().clip = dice013;
+        }
+        else if (num == 14)
+        {
+            GetComponent<AudioSource>().clip = dice014;
+        }
+
+        GetComponent<AudioSource>().Play();
+    }
+
     #endregion
 }

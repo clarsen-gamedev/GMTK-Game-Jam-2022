@@ -81,6 +81,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 7738893891419367703}
   moveSpeed: 50
+  dice001: {fileID: 8300000, guid: 58851c797a6161243a8dcb9755a9e479, type: 3}
+  dice002: {fileID: 8300000, guid: 05d991d2e3260a648b91c358ec2c2f77, type: 3}
+  dice003: {fileID: 8300000, guid: 94213152cd634fa4ba0da849d41374d2, type: 3}
+  dice004: {fileID: 8300000, guid: 9bceda438596cb7499484616b61fe627, type: 3}
+  dice005: {fileID: 8300000, guid: c6365d934bcb2ac48a3878e9ef2725bd, type: 3}
+  dice006: {fileID: 8300000, guid: d8361390cef22f24a9d50fb7d5825cdd, type: 3}
+  dice007: {fileID: 8300000, guid: 83a834b2e97ff894daed03f392a51583, type: 3}
+  dice008: {fileID: 8300000, guid: 2acd7858633559e4eb957de2132ce259, type: 3}
+  dice009: {fileID: 8300000, guid: 87037bf4be9ecf643a4804498167302e, type: 3}
+  dice010: {fileID: 8300000, guid: 445c8a97170c25c4da1e8a097ce298eb, type: 3}
+  dice011: {fileID: 8300000, guid: 1952ef4e801a1de43bc88cbff68fb3b9, type: 3}
+  dice012: {fileID: 8300000, guid: f07caf7a76e6de94494515bf094357e7, type: 3}
+  dice013: {fileID: 8300000, guid: 1ae8b2788497573419ec417a30c76e54, type: 3}
+  dice014: {fileID: 8300000, guid: e7878789a579fe9449a8cd30a86c1151, type: 3}
 --- !u!114 &4040369191725744730
 MonoBehaviour:
   m_ObjectHideFlags: 0
