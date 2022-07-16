@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class CheckDieValue : MonoBehaviour
 {
     #region Public Variables
-    public Text upperSideText;  // Shows which side is facing up on the UI
+    [HideInInspector] public int currentSide;   // Reference to the current facing side
+    public Text upperSideText;                  // Shows which side is facing up on the UI
     public Vector3Int directionValues;
     #endregion
 
@@ -33,36 +34,37 @@ public class CheckDieValue : MonoBehaviour
             {
                 if (Vector3.Dot(Vector3.up, transform.right) > 0)
                 {
-                    upperSideText.text = FaceRepresent[directionValues.x];
+                    currentSide = directionValues.x;
                 }
                 else
                 {
-                    upperSideText.text = FaceRepresent[opposingDirectionValues.x];
+                    currentSide = opposingDirectionValues.x;
                 }
             }
             else if (Vector3.Cross(Vector3.up, transform.up).magnitude < 0.5f) //y axis
             {
                 if (Vector3.Dot(Vector3.up, transform.up) > 0)
                 {
-                    upperSideText.text = FaceRepresent[directionValues.y];
+                    currentSide = directionValues.y;
                 }
                 else
                 {
-                    upperSideText.text = FaceRepresent[opposingDirectionValues.y];
+                    currentSide = opposingDirectionValues.y;
                 }
             }
             else if (Vector3.Cross(Vector3.up, transform.forward).magnitude < 0.5f) //z axis
             {
                 if (Vector3.Dot(Vector3.up, transform.forward) > 0)
                 {
-                    upperSideText.text = FaceRepresent[directionValues.z];
+                    currentSide = directionValues.z;
                 }
                 else
                 {
-                    upperSideText.text = FaceRepresent[opposingDirectionValues.z];
+                    currentSide = opposingDirectionValues.z;
                 }
             }
 
+            upperSideText.text = "Current Face: " + currentSide;
             transform.hasChanged = false;
         }
     }
