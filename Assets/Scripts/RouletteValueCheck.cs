@@ -13,9 +13,6 @@ public class RouletteValueCheck : MonoBehaviour
     [Header("Variables")]
     public int requiredFace;        // Which face of the die is needed to pass the check
     public Animator gateAnimator;   // Animator attached to the gate which gets lowered
-
-
-
     #endregion
 
     #region Private Variables
@@ -69,8 +66,17 @@ public class RouletteValueCheck : MonoBehaviour
                 gameObject.SetActive(false);    // Disable the current collider
 
                 gameManager.playerScore += requiredFace;
+                gameManager.colliderCount++;
 
-                gameManager.NextGoal(); // Select the next collider to activate
+                if (gameManager.playerScore >= gameManager.finalScore)  // If the player has achieved the final score...
+                {
+                    collider.GetComponent<PlayerController>().enabled = false;  // Disable player controls
+                    gameManager.UISwitch(GameManager.UIScreens.VICTORY);        // Switch to the victory screen
+                }
+                else
+                {
+                    gameManager.NextGoal(); // Select the next collider to activate
+                }
             }
         }
     }
