@@ -11,13 +11,12 @@ public class GameManager : MonoBehaviour
 {
     #region Public and Serialized Variables
     [Header("Gameplay Objects")]
-    [SerializeField] GameObject player;         // Reference to the player object in the scene
-    [SerializeField] Vector2[] startPositions;  // Array of possible starting positions for the player on game start
+    [SerializeField] GameObject player;     // Reference to the player object in the scene
+    [SerializeField] Vector3 startPosition; // Starting position for the player on game start
 
     [Header("UI Elements")]
     [SerializeField] GameObject gameplayUI; // UI screen for gameplay
     [SerializeField] GameObject pauseUI;    // UI screen for pause screen
-    [SerializeField] GameObject gameOverUI; // UI screen for game over screen
 
     [Header("Controls")]
     [SerializeField] KeyCode pauseButton = KeyCode.Escape;  // Reference to the key responsible for pausing the game
@@ -31,6 +30,12 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Functions
+    // Awake is called on the first possible frame
+    private void Awake()
+    {
+        UISwitch(UIScreens.GAME);   // Start on the gameplay screen
+    }
+
     // Update is called once per frame
     private void Update()
     {
@@ -61,16 +66,8 @@ public class GameManager : MonoBehaviour
         UISwitch(UIScreens.GAME);   // Switch screen
         Time.timeScale = 1f;        // Resume time
 
-        // Reset level layout?
-        // Randomly select face?
-        // Randomly select level rotation
-
         // Reset the player
-        player.transform.position = new Vector3(0, 2, 0);       // Randomly select new starting position from array (TEMP LOCATION UNTIL FIXED)
-        player.GetComponent<PlayerController>().enabled = true; // Enable player controls
-        // New control scheme for the player (random)
-
-        // Reset score?
+        player.transform.position = startPosition;              // Randomly select new starting position from array (TEMP LOCATION UNTIL FIXED)
     }
 
     // Call this function when the player dies
@@ -93,21 +90,18 @@ public class GameManager : MonoBehaviour
         {
             gameplayUI.SetActive(true);
             pauseUI.SetActive(false);
-            gameOverUI.SetActive(false);
         }
 
         else if (screen == UIScreens.PAUSE)
         {
             gameplayUI.SetActive(false);
             pauseUI.SetActive(true);
-            gameOverUI.SetActive(false);
         }
 
         else if (screen == UIScreens.GAMEOVER)
         {
             gameplayUI.SetActive(false);
             pauseUI.SetActive(false);
-            gameOverUI.SetActive(true);
         }
     }
     #endregion

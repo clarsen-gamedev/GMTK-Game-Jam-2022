@@ -4,15 +4,46 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Public & Serialized Variables
+    public Rigidbody rb;
+    public float moveSpeed = 10f;
+    #endregion
+
+    #region Private Variables
+    private float xInput;
+    private float yInput;
+    #endregion
+
+    #region Functions
+    // Awake is called before the game loads
+    private void Awake()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        ProcessInputs();    // Handle player inputs
     }
+
+    // FixedUpdate is called at a consistent rate
+    private void FixedUpdate()
+    {
+        Move(); // Move the player
+    }
+
+    // Handle player inputs
+    private void ProcessInputs()
+    {
+        xInput = Input.GetAxis("Horizontal");   // Grab the input on the x-axis
+        yInput = Input.GetAxis("Vertical");     // Grab the input on the y-axis
+    }
+
+    // Move the player
+    private void Move()
+    {
+        rb.AddForce(new Vector3(xInput, 0f, yInput) * moveSpeed);
+    }
+    #endregion
 }
