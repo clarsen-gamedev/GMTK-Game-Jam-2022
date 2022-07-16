@@ -6,6 +6,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameplayUI; // UI screen for gameplay
     [SerializeField] GameObject pauseUI;    // UI screen for pause screen
     [SerializeField] GameObject gameOverUI; // UI screen for game over screen
+    [SerializeField] Text gameOverText;     // Text for the game over screen
 
     [Header("Controls")]
     [SerializeField] KeyCode pauseButton = KeyCode.Escape;  // Reference to the key responsible for pausing the game
@@ -57,7 +59,38 @@ public class GameManager : MonoBehaviour
             {
                 PauseGame();
             }
-        }    
+        }
+
+        // Game Over Screen Message
+        if (player.GetComponent<CheckDieValue>().currentSide == 1)
+        {
+            gameOverText.text = "Oof";
+        }
+
+        else if (player.GetComponent<CheckDieValue>().currentSide == 2)
+        {
+            gameOverText.text = "Big oof";
+        }
+
+        else if (player.GetComponent<CheckDieValue>().currentSide == 3)
+        {
+            gameOverText.text = "Git gud scrub";
+        }
+
+        else if (player.GetComponent<CheckDieValue>().currentSide == 4)
+        {
+            gameOverText.text = "Could have been better";
+        }
+
+        else if (player.GetComponent<CheckDieValue>().currentSide == 5)
+        {
+            gameOverText.text = "You call that a roll?";
+        }
+
+        else
+        {
+            gameOverText.text = "By all accounts, that was bad";
+        }
     }
 
     // Call this function to unpause the game
