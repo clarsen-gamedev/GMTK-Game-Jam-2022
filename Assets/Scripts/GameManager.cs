@@ -11,8 +11,14 @@ public class GameManager : MonoBehaviour
 {
     #region Public and Serialized Variables
     [Header("Gameplay Objects")]
-    [SerializeField] GameObject player;     // Reference to the player object in the scene
-    [SerializeField] Vector3 startPosition; // Starting position for the player on game start
+    public GameObject player;     // Reference to the player object in the scene
+    public Vector3 startPosition; // Starting position for the player on game start
+
+    [Header("Roulette Colliders")]
+    public GameObject[] ring1Colliders;
+
+    [Header("Animations")]
+    public Animator gateAnimator;
 
     [Header("UI Elements")]
     [SerializeField] GameObject gameplayUI; // UI screen for gameplay
@@ -33,7 +39,7 @@ public class GameManager : MonoBehaviour
     // Awake is called on the first possible frame
     private void Awake()
     {
-        UISwitch(UIScreens.GAME);   // Start on the gameplay screen
+        ResetGame();
     }
 
     // Update is called once per frame
@@ -83,6 +89,17 @@ public class GameManager : MonoBehaviour
         player.transform.position = startPosition;                  // Reset player position
         player.transform.rotation = Quaternion.identity;            // Reset player rotation
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;   // Reset player movement
+
+        // Reset Roulette Colliders
+        foreach (GameObject collider in ring1Colliders)
+        {
+            collider.GetComponent<RouletteValueCheck>().isActive = false;   // Set all colliders to inactive
+            collider.SetActive(true);
+        }
+        ring1Colliders[Random.Range(0, ring1Colliders.Length)].GetComponent<RouletteValueCheck>().isActive = true;  // Activate a random collider
+
+        // Reset Animations
+        gateAnimator.Play("GateClose");
     }
 
     // Call this function when the player dies
