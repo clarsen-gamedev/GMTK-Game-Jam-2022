@@ -20,9 +20,14 @@ public class RouletteValueCheck : MonoBehaviour
     [SerializeField] Material active;
     #endregion
 
+    #region Private Variables
+    private GameManager gameManager;    // Reference to the game manager in the scene
+    #endregion
+
     #region Functions
     private void Awake()
     {
+        gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
         isActive = false;
     }
 
@@ -45,8 +50,13 @@ public class RouletteValueCheck : MonoBehaviour
             // If the face matches the required value...
             if (collider.gameObject.GetComponent<CheckDieValue>().currentSide == requiredFace)
             {
-                gateAnimator.SetTrigger("GateOpen");
-                gameObject.SetActive(false);
+                if (gateAnimator.GetCurrentAnimatorStateInfo(0).IsName("GateClose"))    // If the gate is still closed...
+                {
+                    gateAnimator.SetTrigger("GateOpen");    // Open the gate
+                }
+                gameObject.SetActive(false);    // Disable the current collider
+
+                //gameManager.NextGoal(); // Select the next collider to activate
             }
         }
     }
