@@ -12,6 +12,23 @@ public class PlayerController : MonoBehaviour
     #region Public & Serialized Variables
     public Rigidbody rb;
     public float moveSpeed = 10f;
+
+    // audio dice clips
+    public AudioClip dice001;
+    public AudioClip dice002;
+    public AudioClip dice003;
+    public AudioClip dice004;
+    public AudioClip dice005;
+    public AudioClip dice006;
+    public AudioClip dice007;
+    public AudioClip dice008;
+    public AudioClip dice009;
+    public AudioClip dice010;
+    public AudioClip dice011;
+    public AudioClip dice012;
+    public AudioClip dice013;
+    public AudioClip dice014;
+
     #endregion
 
     #region Private Variables
