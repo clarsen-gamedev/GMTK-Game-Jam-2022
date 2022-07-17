@@ -4007,7 +4007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1298057386}
   startPosition: {x: 0, y: 120, z: -130}
-  finalScore: 10
+  finalScore: 77
   playerScore: 0
   colliderCount: 0
   outerRingColliders:
