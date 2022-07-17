@@ -2,3 +2,10 @@
 -roulette spin noise
 - sound for success
 - sound for failure
+
+- need play game button
+- credits button
+- quit button
+- title
+- instructions
+
