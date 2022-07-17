@@ -6,6 +6,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -248,7 +249,7 @@ public class GameManager : MonoBehaviour
     // Call this function to quit the game
     public void QuitGame()
     {
-        Application.Quit(); // Exit the game
+        SceneManager.LoadScene("GameTitle");    // Load the title scene
     }
 
     // Function for enabling and disabling specific UI screens

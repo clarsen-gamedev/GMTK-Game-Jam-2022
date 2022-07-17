@@ -32,7 +32,7 @@ public class TitleScreenManager : MonoBehaviour
     // Begin Game Button
     public void BeginGame()
     {
-        SceneManager.LoadScene("Connor Scene");
+        SceneManager.LoadScene("Connor Scene"); // Load the game scene
     }
 
     // Credits Button
