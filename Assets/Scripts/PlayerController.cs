@@ -42,6 +42,9 @@ public class PlayerController : MonoBehaviour
     #region Private Variables
     private float xInput;
     private float yInput;
+    private bool isRotating;
+
+    private Vector3 target;
     #endregion
 
     #region Functions
@@ -49,7 +52,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-
     }
 
     // Update is called once per frame
@@ -70,46 +72,15 @@ public class PlayerController : MonoBehaviour
         xInput = Input.GetAxis("Horizontal");   // Grab the input on the x-axis
         yInput = Input.GetAxis("Vertical");     // Grab the input on the y-axis
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Space) && !isRotating)
         {
             rb.angularVelocity = Vector3.zero;
-            transform.rotation = Quaternion.Euler(0, 0, 90);
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            rb.angularVelocity = Vector3.zero;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            rb.angularVelocity = Vector3.zero;
-            transform.rotation = Quaternion.Euler(-90, 0, 0);
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            rb.angularVelocity = Vector3.zero;
-            transform.rotation = Quaternion.Euler(90, 0, 0);
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            rb.angularVelocity = Vector3.zero;
-            transform.rotation = Quaternion.Euler(0, 0, 180);
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            rb.angularVelocity = Vector3.zero;
-            transform.rotation = Quaternion.Euler(0, -90, -90);
         }
     }
 
     // Move the player
     private void Move()
-    {
+    {        
         rb.AddForce(new Vector3(xInput, 0f, yInput) * moveSpeed);
     }
 
@@ -175,6 +146,5 @@ public class PlayerController : MonoBehaviour
 
         GetComponent<AudioSource>().Play();
     }
-
     #endregion
 }
