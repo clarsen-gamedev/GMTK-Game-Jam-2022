@@ -249,6 +249,7 @@ public class GameManager : MonoBehaviour
     // Call this function to quit the game
     public void QuitGame()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("GameTitle");    // Load the title scene
     }
 
