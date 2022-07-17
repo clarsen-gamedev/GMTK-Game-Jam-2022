@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     #region Public & Serialized Variables
     public Rigidbody rb;
     public float moveSpeed = 10f;
+    public float maxSpeed = 10f;
 
     // audio dice clips
     public AudioClip dice001;
@@ -74,14 +75,19 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && !isRotating)
         {
+            rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+            rb.AddForce(0f, moveSpeed, 0f);
         }
     }
 
     // Move the player
     private void Move()
-    {        
-        rb.AddForce(new Vector3(xInput, 0f, yInput) * moveSpeed);
+    {
+        if (rb.velocity.magnitude < maxSpeed)
+        {
+            rb.AddForce(new Vector3(xInput, 0f, yInput) * moveSpeed);
+        }
     }
 
     private void OnCollisionEnter()

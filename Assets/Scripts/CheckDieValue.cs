@@ -12,7 +12,6 @@ public class CheckDieValue : MonoBehaviour
 {
     #region Public Variables
     [HideInInspector] public int currentSide;   // Reference to the current facing side
-    public Text upperSideText;                  // Shows which side is facing up on the UI
     public Vector3Int directionValues;
     #endregion
 
@@ -69,7 +68,6 @@ public class CheckDieValue : MonoBehaviour
                 }
             }
 
-            upperSideText.text = "Current Face: " + currentSide;
             transform.hasChanged = false;
         }
     }

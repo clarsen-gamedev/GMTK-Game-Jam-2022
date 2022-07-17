@@ -11,6 +11,9 @@ public class TitleScreenManager : MonoBehaviour
     [SerializeField] GameObject instructionsUI;
     [SerializeField] GameObject creditsUI;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip menuSelect;
+
     [HideInInspector] public enum UIScreens { TITLE, INSTRUCTIONS, CREDITS, NONE };
     [HideInInspector] public UIScreens currentScreen;
     #endregion
@@ -19,6 +22,7 @@ public class TitleScreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GetComponent<AudioSource>().clip = menuSelect;  // Load the clip for selecting a button
         UISwitch(UIScreens.TITLE);  // Start on the title screen
     }
     #endregion
@@ -26,30 +30,35 @@ public class TitleScreenManager : MonoBehaviour
     // Play Game Button
     public void PlayGame()
     {
+        GetComponent<AudioSource>().Play();
         UISwitch(UIScreens.INSTRUCTIONS);   // Switch to the instructions screen
     }
 
     // Begin Game Button
     public void BeginGame()
     {
+        GetComponent<AudioSource>().Play();
         SceneManager.LoadScene("Connor Scene"); // Load the game scene
     }
 
     // Credits Button
     public void Credits()
     {
+        GetComponent<AudioSource>().Play();
         UISwitch(UIScreens.CREDITS);    // Switch to the credits screen
     }
 
     // Menu Button
     public void Menu()
     {
+        GetComponent<AudioSource>().Play();
         UISwitch(UIScreens.TITLE);  // Switch to the title screen
     }
 
     // Quit Button
     public void QuitGame()
     {
+        GetComponent<AudioSource>().Play();
         Application.Quit(); // Quit the game
     }
 

@@ -32,6 +32,11 @@ public class GameManager : MonoBehaviour
     public Material goal;
     public Material hazard;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip menuSelect;
+    [SerializeField] AudioClip victorySound;
+    [SerializeField] AudioSource uiAudioSource;
+
     [Header("UI Elements")]
     [SerializeField] GameObject gameplayUI;         // UI screen for gameplay
     [SerializeField] GameObject pauseUI;            // UI screen for pause screen
@@ -40,6 +45,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text gameOverText;             // Text for the game over screen
     [SerializeField] Text scoreText;                // Text for the player score
     [SerializeField] Text colliderCountText;        // Text for the collider count
+    [SerializeField] Text timerText;                // Text for the timer
+    [SerializeField] Text resultsText;              // Text for the results upon victory
 
     [Header("Controls")]
     [SerializeField] KeyCode pauseButton = KeyCode.Escape;  // Reference to the key responsible for pausing the game
@@ -52,12 +59,15 @@ public class GameManager : MonoBehaviour
     #region Private Variables
     private bool isPaused = false;
     private int cycleCount = 0;
+    private float secondsCount;
+    private int minutesCount;
     #endregion
 
     #region Functions
     // Awake is called on the first possible frame
     private void Awake()
     {
+        uiAudioSource.clip = menuSelect;
         ResetGame();
     }
 
@@ -68,7 +78,10 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + playerScore;
 
         // Display the number of spaces hit
-        colliderCountText.text = "Spaces Hit: " + colliderCount;
+        colliderCountText.text = "Matches: " + colliderCount;
+
+        // Update the timer
+        UpdateTimer();
 
         // Pause the game
         if (Input.GetKeyDown(pauseButton))
@@ -180,6 +193,8 @@ public class GameManager : MonoBehaviour
     // Call this function to unpause the game
     public void ResumeGame()
     {
+        uiAudioSource.clip = menuSelect;
+        uiAudioSource.Play();       // Play sound
         UISwitch(UIScreens.GAME);   // Switch to game screen
         Time.timeScale = 1f;        // Resume time
         isPaused = false;           // Resume game
@@ -189,6 +204,8 @@ public class GameManager : MonoBehaviour
     // Call this function to pause the game
     public void PauseGame()
     {
+        uiAudioSource.clip = menuSelect;
+        uiAudioSource.Play();       // Play sound
         UISwitch(UIScreens.PAUSE);  // Switch to pause screen
         Time.timeScale = 0f;        // Pause time
         isPaused = true;            // Pause game
@@ -198,6 +215,9 @@ public class GameManager : MonoBehaviour
     // Call this function to reinitialize the game
     public void ResetGame()
     {
+        uiAudioSource.clip = menuSelect;
+        uiAudioSource.Play();       // Play sound
+
         // Reset the UI
         UISwitch(UIScreens.GAME);   // Switch screen
         Time.timeScale = 1f;        // Resume time
@@ -237,6 +257,10 @@ public class GameManager : MonoBehaviour
 
         gateAnimatorInner.Play("GateClosed");
         gateAnimatorInner.SetBool("GateOpen", false);
+
+        // Reset Timer
+        secondsCount = 0;
+        minutesCount = 0;
     }
 
     // Call this function when the player dies
@@ -249,8 +273,31 @@ public class GameManager : MonoBehaviour
     // Call this function to quit the game
     public void QuitGame()
     {
+        uiAudioSource.clip = menuSelect;
+        uiAudioSource.Play();       // Play sound
         Time.timeScale = 1f;
         SceneManager.LoadScene("GameTitle");    // Load the title scene
+    }
+
+    // Updates the timer every frame
+    public void UpdateTimer()
+    {
+        secondsCount += Time.deltaTime;
+
+        if ((int)secondsCount < 10)
+        {
+            timerText.text = minutesCount + ":0" + (int)secondsCount;
+        }
+        else
+        {
+            timerText.text = minutesCount + ":" + (int)secondsCount;
+        }
+
+        if (secondsCount >= 60)
+        {
+            minutesCount++;
+            secondsCount = 0;
+        }
     }
 
     // Function for enabling and disabling specific UI screens
@@ -288,6 +335,19 @@ public class GameManager : MonoBehaviour
 
         else if (screen == UIScreens.VICTORY)
         {
+            uiAudioSource.clip = victorySound;
+            uiAudioSource.Play();
+
+            // Update victory screen text
+            if ((int)secondsCount < 10)
+            {
+                resultsText.text = "You reached " + finalScore + " with " + colliderCount + " matches in " + minutesCount + ":0" + (int)secondsCount + "!";
+            }
+            else
+            {
+                resultsText.text = "You reached " + finalScore + " with " + colliderCount + " matches in " + minutesCount + ":" + (int)secondsCount + "!";
+            }
+
             gameplayUI.SetActive(false);
             pauseUI.SetActive(false);
             gameOverUI.SetActive(false);

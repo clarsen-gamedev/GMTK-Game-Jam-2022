@@ -81,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 7738893891419367703}
   moveSpeed: 50
+  maxSpeed: 50
   dice001: {fileID: 8300000, guid: 58851c797a6161243a8dcb9755a9e479, type: 3}
   dice002: {fileID: 8300000, guid: 05d991d2e3260a648b91c358ec2c2f77, type: 3}
   dice003: {fileID: 8300000, guid: 94213152cd634fa4ba0da849d41374d2, type: 3}
